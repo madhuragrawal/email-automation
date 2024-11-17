@@ -1,7 +1,3 @@
-import dotenv from "dotenv";
-
-dotenv.config();
-
 export const SENDER_NAME = '';
 export const REPLY_TO_EMAIL = '';
 
