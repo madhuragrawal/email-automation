@@ -1,0 +1,13 @@
+
+Dear Hiring Manager,
+
+I am writing to express my interest in the {{role}} role at {{companyName}}.
+I believe my skills and experience align perfectly with your needs.
+
+For more details about me, you can view my resume here: {{resumeLink}}
+And my portfolio here: {{portfolioLink}}
+
+Thank you for considering my application.
+
+Best regards,
+{{senderName}}
