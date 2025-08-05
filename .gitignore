@@ -2,4 +2,6 @@
 .env
 
 logs/
-attachments/
+
+attachments/*
+!attachments/sample.pdf
