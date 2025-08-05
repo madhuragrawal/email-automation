@@ -1,4 +1,3 @@
-
 # 🌟 Email Automation Tool  
 
 ## Overview
@@ -7,80 +6,77 @@ This project is an open-source **Node.js** application designed to automate emai
 
 ## ✨ Features  
 
-- **SMTP Integration**: Works with any SMTP service provider (e.g., Gmail, Hostinger, Outlook, Yahoo).  
-- **Customizable Templates**: Define your own HTML and plain-text email templates using placeholders (e.g., `{{role}}`, `{{companyName}}`).
-- **Dynamic Placeholders**: Populate templates dynamically with recipient-specific data.
-- **Progress Tracking**: Visual progress bar displays the email-sending process in real time.
-- **Batch Email Support**: Effortlessly send emails to multiple recipients with unique personalized content.
+- **SMTP Integration**: Works with any SMTP service provider (e.g., Gmail, Hostinger, Outlook, Yahoo).
+- **Customizable Templates**: Define your own HTML, plain-text, and subject templates using placeholders like `{{role}}`, `{{companyName}}`.
+- **Dynamic Placeholder Injection**: Automatically fills email templates with recipient-specific or fallback data.
+- **CSV-Based Recipient Input**: Add multiple recipients easily using a `.csv` file with custom placeholder columns.
+- **Attachments Support**: Just drop files into the `attachments/` folder and they’ll be included in all emails automatically.
+- **Confirmation Before Send**: Summary of email meta (attachments, placeholders, reply-to, sender name) shown before sending.
+- **Progress Tracking**: Real-time CLI progress bar to track sending progress.
+- **Smart Logging**: Auto-saves detailed logs of accepted, rejected, and failed emails into timestamped files in the `logs/` folder.
 
 ---
 
-## 🛠️ Setup  
+## 🛠️ Setup
 
-### 1. Clone the Repository  
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/madhuragrawal/email-automation.git
 cd email-automation
 ```
 
-### 2. Install Dependencies  
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Configure Environment Variables  
+### 3. Configure Environment Variables
 
-Create a `.env` file in the project’s root directory with the following keys:  
+Create a `.env` file in the project’s root directory:
 
-```plaintext
+```env
 # SMTP Configuration
 SMTP_HOST=smtp.your-email-provider.com
 SMTP_PORT=465
 SMTP_SECURE=true
 SMTP_USER=your_email@example.com
-SMTP_PASS=your_password
+SMTP_PASS=your_email_password
 ```
 
-### 4. Customize Email Templates  
-
-Update the `email_template.html`, `email_subject_template.txt` and `email_template.txt` files to match your use case. Use placeholders such as `{{role}}`, `{{companyName}}`, `{{senderName}}`, etc., for dynamic content.
 
 ---
 
-## 📤 Usage  
+## 📤 Usage
 
-### 1. Add Recipient Data  
+### 1. Prepare Your Email Templates
 
-In the `setup.js` file, define the data as follows:  
+Edit these files under `/templates/`:
 
-```javascript
-// Common variables for email templates
-// These variables will be used in the templates when no recipient-specific data is provided.
-export const emailVariables = {
-    senderName: SENDER_NAME,
-    resumeLink: 'https://your-resume-link.com',
-    portfolioLink: 'https://your-portfolio-link.com',
-    role: "Software Engineer", // Default role if not specified in recipient-specific data
-    companyName: "Company A", // Default company name if not specified in recipient-specific data
-};
+- `email_template.html` – full HTML email body
+- `email_template.txt` – plain-text version
+- `email_subject_template.txt` – subject line template
 
-// Example usage
-// The mails array contains:
-// - The first element is the email address (or a comma-separated list of email addresses).
-// - The second element is an optional placeholders object for recipient-specific data.
-// Recipient-specific data takes precedence over common variables in `emailVariables`.
-export const mails = [
-    ["recipient1@example.com", { role: "Frontend Developer", companyName: "Company B" }],
-    ["recipient2@example.com, recipient3@example.com"], // Uses defaults from `emailVariables` if no placeholders provided
-];
+Use placeholders like `{{companyName}}`, `{{role}}`, etc., which will be replaced dynamically.
 
+### 2. Prepare Recipient CSV
+
+Create a `recipients.csv` file like this:
+
+```csv
+email,role,companyName
+john@example.com,Frontend Developer,TechCorp
+jane@example.com,Backend Developer,DataWorks
 ```
 
-### 2. Run the Application  
+> ✅ You can include any placeholder fields that are used in your templates.
 
-Use the following command to start sending emails:  
+### 3. Add Attachments (Optional)
+
+Drop any files you want to send with every email into the `/attachments/` folder. These will be auto-included. (Subfolders are ignored.)
+
+### 4. Run the Application
 
 ```bash
 node index.js
@@ -93,16 +89,15 @@ or
 npm run send
 ```
 
-### 3. Output:
-- Real-time progress bar showing how many emails have been sent.
-- Summary of total accepted and rejected emails.
+You’ll see a confirmation summary (sender name, reply-to, attachments, placeholders, recipient count).  
+Type `y` to begin sending.
 
 ---
 
-## 🛡️ Security  
+## 📂 Output and Logs
 
-- **Environment Variables**: Sensitive information like SMTP credentials is stored securely in the `.env` file. Ensure this file is never committed to version control.  
-- **Encryption**: Use strong passwords and, if possible, application-specific passwords for email accounts.  
+- Sending progress is shown in the terminal.
+- A full report is saved to `/logs/log-<timestamp>.txt`, including accepted, rejected, and failed emails.
 
 ---
 
